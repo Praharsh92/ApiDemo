@@ -1,5 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import JssProvider from 'react-jss/lib/JssProvider';
+import getPageContext from 'Root/src/getPageContext';
+
+
 import Document, { Head, Main, NextScript } from 'next/document';
 import flush from 'styled-jsx/server';
 
@@ -56,19 +59,15 @@ MyDocument.getInitialProps = (ctx) => {
 	// 4. page.render
 
 	// Render app and page and get the context of the page with collected side effects.
-	let pageContext;
-	const page = ctx.renderPage((Component) => {
-		const WrappedComponent = (props) => {
-			pageContext = props.pageContext;
-			return <Component {...props} />;
-		};
-
-		WrappedComponent.propTypes = {
-			pageContext: PropTypes.object.isRequired,
-		};
-
-		return WrappedComponent;
-	});
+	const pageContext = getPageContext();
+	const page = ctx.renderPage(Component => props => (
+		<JssProvider
+			registry={pageContext.sheetsRegistry}
+			generateClassName={pageContext.generateClassName}
+		>
+			<Component pageContext={pageContext} {...props} />
+		</JssProvider>
+	));
 
 	return {
 		...page,
