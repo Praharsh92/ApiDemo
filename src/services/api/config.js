@@ -1,5 +1,5 @@
 export default {
-	url: 'http://f37276a5.ngrok.io/api_v1',
+	url: 'http://localhost:8000/api_v1',
 	networkTimeoutThreshold: 55000,
 };
 // export default {

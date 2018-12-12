@@ -1,20 +1,17 @@
 import React from 'react';
 import withRoot from 'Root/src/withRoot';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { compose } from 'redux';
 import Head from 'next/head';
 import { withStyles } from '@material-ui/core/styles';
-import Router from 'next/router';
 
 
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import ErrorIcon from '@material-ui/icons/Clear';
 
 
 import MainHeader from 'Root/src/components/mainHeader';
-import stateMap from 'Root/src/state/stateMap';
 
 const styles = theme => ({
 	root: {
@@ -61,53 +58,37 @@ const styles = theme => ({
 		fontWeight: 400,
 	},
 	btnText: {
-		fontSize: '0.875rem',
+		marginTop: 10,
+		fontSize: '1.5rem',
 		textTransform: 'capitalize',
 	},
 });
 
-const Index = ({ classes, user }) => {
-	let btnText;
-	let btnFunction;
-	if (user.status === 'nok') {
-		btnText = 'Start Application';
-		btnFunction = () => { Router.push('/eligibility'); };
-	} else {
-		btnText = 'Continue to App';
-		btnFunction = () => { Router.push(stateMap[user.current_state]); };
-	}
-	return (
-		<div className={classes.root}>
-			<Head>
-				<title>Demo API</title>
-			</Head>
-			<Grid container spacing={0}>
-				<MainHeader />
+const Index = ({ classes }) => (
+	<div className={classes.root}>
+		<Head>
+			<title>Demo API</title>
+		</Head>
+		<Grid container spacing={0}>
+			<MainHeader showLogout={false} />
+		</Grid>
+		<Grid container spacing={0} style={{ display: 'flex', flex: 1 }}>
+			<Grid item xs={12} style={{ display: 'flex', flex: 1 }}>
+				<div className={classes.content}>
+					<ErrorIcon style={{ height: 45, width: 45 }} />
+					<Typography component="h2" variant="h2" className={classes.btnText}>Declined!</Typography>
+				</div>
 			</Grid>
-			<Grid container spacing={0} style={{ display: 'flex', flex: 1 }}>
-				<Grid item xs={12} style={{ display: 'flex', flex: 1 }}>
-					<div className={classes.content}>
-						<Button variant="outlined" onClick={btnFunction}>
-							<Typography component="h2" variant="h2" className={classes.btnText}>{btnText}</Typography>
-						</Button>
-					</div>
-				</Grid>
-			</Grid>
-		</div>
-	);
-};
-const mapStateToProps = state => ({
-	user: state.user.user,
-});
+		</Grid>
+	</div>
+);
 
 Index.propTypes = {
 	classes: PropTypes.object.isRequired,
-	user: PropTypes.object.isRequired,
 };
 
 
 export default compose(
-	connect(mapStateToProps),
 	withRoot,
 	withStyles(styles),
 )(Index);

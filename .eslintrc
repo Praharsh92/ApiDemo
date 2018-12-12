@@ -25,6 +25,7 @@
         "import/prefer-default-export": 0,
         "react/jsx-indent": [2, 'tab'],
         "react/jsx-indent-props": [2, 'tab'],
+        "react/jsx-one-expression-per-line": "off",
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "react/forbid-prop-types": [2, { "forbid": ['any', 'array'] }],
         "jsx-a11y/anchor-is-valid": ["error", {

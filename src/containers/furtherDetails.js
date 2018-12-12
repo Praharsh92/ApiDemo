@@ -1,5 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Router from 'next/router';
+import PropTypes from 'prop-types';
+
 
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -7,35 +10,46 @@ import Typography from '@material-ui/core/Typography';
 
 import TextInput from 'Root/src/components/form/textinput';
 import NumberInput from 'Root/src/components/form/numberinput';
-import { notEmptyValidator, dateValidator } from 'Root/src/components/form/validator';
-import { checkEligibility } from 'Root/src/state/application/actions';
+import Select from 'Root/src/components/form/select';
+import { notEmptyValidator, selectValidator } from 'Root/src/components/form/validator';
+import { submitFurtherDetails } from 'Root/src/state/application/actions';
 
 const validators = {
-	amountRequested: {
+	taxRegNo: {
 		validatorMethod: notEmptyValidator,
 	},
-	revenue: {
+	sector: {
 		validatorMethod: notEmptyValidator,
 	},
-	comapnyName: {
-		validatorMethod: notEmptyValidator,
-	},
-	dateOfRegistration: {
-		validatorMethod: dateValidator,
+	location: {
+		validatorMethod: selectValidator,
 	},
 };
 
-class Eligibility extends React.Component {
+const locationOptions = [
+	{ id: 1, value: 'Urban' },
+	{ id: 2, value: 'Semi-Urban' },
+	{ id: 3, value: 'Rural' },
+];
+
+class FurtherDetails extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			comapnyName: '',
-			dateOfRegistration: '',
-			revenue: '',
-			amountRequested: '',
+			taxRegNo: '',
+			sector: '',
+			location: '',
 			validateForm: false,
 		};
 		this.handleClick = this.handleClick.bind(this);
+	}
+
+	componentDidMount() {
+		const { user } = this.props;
+		console.log(user);
+		if (user.status === 'nok') {
+			Router.push('/eligibility');
+		}
 	}
 
 	handleClick = (e) => {
@@ -54,62 +68,48 @@ class Eligibility extends React.Component {
 			return false;
 		});
 		if (!isInvalid) {
-			this.props.checkEligibility(this.state);
+			this.props.submitFurtherDetails(this.state);
 		}
 	}
 
 	render() {
 		const {
-			amountRequested, lockEligibility, validateForm, dateOfRegistration, revenue, comapnyName,
+			lockFurtherDetails, validateForm, taxRegNo, sector, location,
 		} = this.state;
 		return (
 			<div>
 				<Grid item xs={12} style={{ paddingLeft: 8, paddingRight: 8, paddingBottom: 4 }}>
 					<NumberInput
-						id="amountRequested"
-						label="Desired Loan Amount"
-						value={amountRequested}
+						id="taxRegNo"
+						label="Tax Registartion Number"
+						value={taxRegNo}
 						onChange={this.handleClick}
-						validationHelper={validators.amountRequested}
+						validationHelper={validators.taxRegNo}
 						validateForm={validateForm}
-						componentType="currency"
-						disabled={lockEligibility}
-						noErrorHelperText="Please Enter Desired Loan Amount"
+						disabled={lockFurtherDetails}
 					/>
 				</Grid>
 				<Grid item xs={12} style={{ paddingLeft: 8, paddingRight: 8, paddingBottom: 4 }}>
 					<TextInput
-						id="dateOfRegistration"
-						label="Date of Registration"
-						value={dateOfRegistration}
+						id="sector"
+						label="Sector"
+						value={sector}
 						onChange={this.handleClick}
-						validationHelper={validators.dateOfRegistration}
+						validationHelper={validators.sector}
 						validateForm={validateForm}
-						componentType="date"
-						disabled={lockEligibility}
+						disabled={lockFurtherDetails}
 					/>
 				</Grid>
 				<Grid item xs={12} style={{ paddingLeft: 8, paddingRight: 8, paddingBottom: 4 }}>
-					<NumberInput
-						id="revenue"
-						label="Company Revenue"
-						value={revenue}
+					<Select
+						id="location"
+						label="Location"
+						value={location}
 						onChange={this.handleClick}
-						validationHelper={validators.revenue}
+						validationHelper={validators.location}
 						validateForm={validateForm}
-						disabled={lockEligibility}
-						componentType="currency"
-					/>
-				</Grid>
-				<Grid item xs={12} style={{ paddingLeft: 8, paddingRight: 8, paddingBottom: 4 }}>
-					<TextInput
-						id="comapnyName"
-						label="Company Name"
-						value={comapnyName}
-						onChange={this.handleClick}
-						validationHelper={validators.comapnyName}
-						validateForm={validateForm}
-						disabled={lockEligibility}
+						options={locationOptions}
+						disabled={lockFurtherDetails}
 					/>
 				</Grid>
 				<Grid item xs={12} style={{ padding: 8 }}>
@@ -122,9 +122,17 @@ class Eligibility extends React.Component {
 	}
 }
 
+FurtherDetails.propTypes = {
+	user: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = state => ({
+	user: state.user.user,
+});
+
 const mapDispatchToProps = dispatch => ({
-	checkEligibility: data => dispatch(checkEligibility(data)),
+	submitFurtherDetails: data => dispatch(submitFurtherDetails(data)),
 });
 
 
-export default connect(null, mapDispatchToProps)(Eligibility);
+export default connect(mapStateToProps, mapDispatchToProps)(FurtherDetails);

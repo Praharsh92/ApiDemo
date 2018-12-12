@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import logServer from 'Root/src/services/logServer';
+import { logServer } from 'Root/src/services/logServer';
 import { updateFetchingNetworkDataFlag } from 'Root/src/state/api/actions';
 import { updateNetworkErrorFlag, updateNetworkTimeoutErrorFlag } from 'Root/src/state/error/actions';
 import apiConfig from './config';

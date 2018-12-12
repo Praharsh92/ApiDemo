@@ -52,7 +52,7 @@ const styles = theme => ({
 	},
 	subTitle: {
 		fontSize: '1rem',
-		fontWeight: 400,
+		fontWeight: 300,
 	},
 });
 
