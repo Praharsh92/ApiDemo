@@ -4,6 +4,7 @@ const endPoints = {
 	signup: '/users/register/',
 	login: '/users/login/',
 	inDepth: '/users/indepth/',
+	choosePackage: '/packages/choose-package/',
 };
 
 export const getAppData = fetchApi => fetchApi()(endPoints.appdata, {}, 'get');
@@ -23,5 +24,12 @@ export const register = (fetchApi, username, password, email, passedUuid) => fet
 	},
 	'post',
 );
+export const submitPackage = (fetchApi, packageId) => fetchApi()(
+	endPoints.choosePackage,
+	{ id: packageId },
+	'post',
+);
+
+export const getPackage = fetchApi => fetchApi()(endPoints.choosePackage, {}, 'get');
 
 export const verifyLogin = (fetchApi, username, password) => fetchApi()(endPoints.login, { username, password }, 'post');
