@@ -41,7 +41,16 @@ const styles = theme => ({
 		flexDirection: 'column',
 	},
 	card: {
-		padding: '0 40px',
+		padding: `0px ${theme.spacing.unit * 8}px `,
+		position: 'relative',
+		width: '30%',
+		minWidth: 400,
+		[theme.breakpoints.down('sm')]: {
+			width: '60%',
+		},
+	},
+	cardNoPadding: {
+		padding: `0px ${theme.spacing.unit * 4}px `,
 		position: 'relative',
 		width: '30%',
 		minWidth: 400,
@@ -71,7 +80,7 @@ const styles = theme => ({
 });
 
 const LayOutLogin = ({
-	children, classes, titleHead, subTitle, title, description, fetchingNetworkData,
+	children, classes, titleHead, subTitle, title, description, fetchingNetworkData, noHorizontalPadding,
 }) => (
 	<div className={classes.root}>
 		<Head>
@@ -84,7 +93,10 @@ const LayOutLogin = ({
 		<Grid container spacing={0} style={{ display: 'flex', flex: 1 }}>
 			<Grid item xs={12} style={{ display: 'flex', flex: 1 }}>
 				<div className={classes.content}>
-					<Card className={classes.card} classes={{ root: classes.cardBackground }}>
+					<Card
+						className={noHorizontalPadding ? classes.cardNoPadding : classes.card}
+						classes={{ root: classes.cardBackground }}
+					>
 						{ fetchingNetworkData
 							? (
 								<div className={classes.progress}>
@@ -122,12 +134,14 @@ LayOutLogin.propTypes = {
 	title: PropTypes.string,
 	description: PropTypes.string,
 	fetchingNetworkData: PropTypes.bool.isRequired,
+	noHorizontalPadding: PropTypes.bool,
 };
 LayOutLogin.defaultProps = {
 	titleHead: '',
 	subTitle: '',
 	title: 'API Demo',
 	description: 'Eligibility Page',
+	noHorizontalPadding: false,
 };
 
 const mapStateToProps = state => ({

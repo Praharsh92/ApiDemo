@@ -36,6 +36,7 @@ class Register extends React.Component {
 			error: false,
 			errorMessage: '',
 			validateForm: false,
+			hideForm: false,
 		};
 		this.handleClick = this.handleClick.bind(this);
 	}
@@ -68,15 +69,15 @@ class Register extends React.Component {
 			const { registerUser, passedUuid } = this.props;
 			registerUser(username, password, email, passedUuid)
 				.then((res) => {
-					console.log('in then setting state', res);
 					if (res.data.status === 'nok') {
 						this.setState({ error: true, errorMessage: res.data.response });
+					} else {
+						this.setState({ hideForm: true });
 					}
 					return res;
 				})
 				.then((res) => {
 					// console.log(res);
-					console.log('in 2nd then pushing', res);
 					if (res.data.status === 'ok') {
 						Router.push(stateMap.indepth_details);
 					}
@@ -86,10 +87,12 @@ class Register extends React.Component {
 
 	render() {
 		const {
-			validateForm, username, password, email, error, errorMessage,
+			validateForm, username, password, email, error, errorMessage, hideForm,
 		} = this.state;
 		const { user } = this.props;
-		console.log(this.props);
+		if (hideForm) {
+			return null;
+		}
 		if (user.status === 'ok') {
 			return (
 				<div>

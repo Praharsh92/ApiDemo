@@ -57,9 +57,7 @@ class Login extends React.Component {
 			const { login, updateloggedUser } = this.props;
 			login(username, password)
 				.then((res) => {
-					updateloggedUser({
-						user: res.data,
-					});
+					updateloggedUser(res.data);
 					return res;
 				})
 				.then((res) => {
@@ -75,7 +73,6 @@ class Login extends React.Component {
 			validateForm, username, password, error, errorMessage,
 		} = this.state;
 		const { user } = this.props;
-		console.log(this.props);
 		if (user.status === 'ok') {
 			return (
 				<div>
