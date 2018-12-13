@@ -74,7 +74,7 @@ const Index = ({ classes, user }) => {
 		btnFunction = () => { Router.push('/eligibility'); };
 	} else {
 		btnText = 'Continue to App';
-		btnFunction = () => { Router.push(stateMap[user.user.current_state]); };
+		btnFunction = () => { Router.push(stateMap[user.current_state]); };
 	}
 	return (
 		<div className={classes.root}>

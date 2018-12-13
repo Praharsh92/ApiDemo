@@ -28,9 +28,7 @@ export const submitFurtherDetails = data => (
 	(dispatch, getState, { fetchApi }) => api.submitFurtherDetails(fetchApi, data)
 		.then((response) => {
 			if (response.data.status === 'ok') {
-				dispatch(updateUser({
-					user: response.data.user,
-				}));
+				dispatch(updateUser(response.data.user));
 				Router.push('/choose-package');
 			} else if (response.data.status === 'nok') {
 				Router.push('/declined');
@@ -51,9 +49,7 @@ export const register = (username, password, email, passedUuid) => (
 					type: actionTypes.CHECKED_ELIGIBILITY,
 					payload: false,
 				});
-				dispatch(updateUser({
-					user: response.data.user,
-				}));
+				dispatch(updateUser(response.data.user));
 			}
 			return response;
 		})
