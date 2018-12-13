@@ -27,9 +27,9 @@ const validators = {
 };
 
 const locationOptions = [
-	{ id: 1, value: 'Urban' },
-	{ id: 2, value: 'Semi-Urban' },
-	{ id: 3, value: 'Rural' },
+	{ id: 'Urban', value: 'Urban' },
+	{ id: 'Semi-Urban', value: 'Semi-Urban' },
+	{ id: 'Rural', value: 'Rural' },
 ];
 
 class FurtherDetails extends React.Component {

@@ -65,19 +65,22 @@ class Register extends React.Component {
 		});
 		if (!isInvalid) {
 			const { username, password, email } = this.state;
-			const { registerUser, updateloggedUser, passedUuid } = this.props;
+			const { registerUser, passedUuid } = this.props;
 			registerUser(username, password, email, passedUuid)
 				.then((res) => {
-					updateloggedUser({
-						user: res.data,
-					});
+					console.log('in then setting state', res);
+					if (res.data.status === 'nok') {
+						this.setState({ error: true, errorMessage: res.data.response });
+					}
 					return res;
 				})
 				.then((res) => {
 					// console.log(res);
-					Router.push(stateMap[res.data.current_state]);
-				})
-				.catch(res => this.setState({ error: true, errorMessage: res.data.response }));
+					console.log('in 2nd then pushing', res);
+					if (res.data.status === 'ok') {
+						Router.push(stateMap.indepth_details);
+					}
+				});
 		}
 	}
 
@@ -154,10 +157,10 @@ Register.propTypes = {
 	user: PropTypes.object.isRequired,
 	registerUser: PropTypes.func.isRequired,
 	canRegister: PropTypes.bool.isRequired,
-	updateloggedUser: PropTypes.func.isRequired,
 	logOut: PropTypes.func.isRequired,
-	passedUuid: PropTypes.string.isRequired,
+	passedUuid: PropTypes.string,
 };
+
 const mapStateToProps = state => ({
 	user: state.user.user,
 	canRegister: state.application.letUserRegister,
@@ -170,7 +173,6 @@ const mapDispatchToProps = dispatch => ({
 	(username, password, email, passedUuid) => dispatch(register(
 		username, password, email, passedUuid,
 	)),
-	updateloggedUser: data => dispatch(updateUser(data)),
 	logOut: () => dispatch(logOut()),
 });
 

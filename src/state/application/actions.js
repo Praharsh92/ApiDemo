@@ -1,5 +1,6 @@
 import Router from 'next/router';
 import stateMap from 'Root/src/state/stateMap';
+import { updateUser } from 'Root/src/state/user/actions';
 import * as actionTypes from './actionTypes';
 import * as api from './api';
 
@@ -26,21 +27,35 @@ export const getEligibilityData = () => (
 export const submitFurtherDetails = data => (
 	(dispatch, getState, { fetchApi }) => api.submitFurtherDetails(fetchApi, data)
 		.then((response) => {
-			if (response.data.next_state === 'dashboard') {
-				Router.push(`/${response.data.next_state}`);
+			if (response.data.status === 'ok') {
+				dispatch(updateUser({
+					user: response.data.user,
+				}));
+				Router.push('/choose-package');
+			} else if (response.data.status === 'nok') {
+				Router.push('/declined');
 			}
 		})
 );
 export const register = (username, password, email, passedUuid) => (
 	(dispatch, getState, { fetchApi }) => api.register(fetchApi, username, password, email, passedUuid)
 		.then((response) => {
-			if (response.data.next_state === 'inDepthDetials') {
-				Router.push(stateMap[response.data.next_state]);
+			console.log('returned response inside register', response);
+			if (response.data.status === 'nok') {
+				console.log('returned response in nok');
+				return response;
+			}
+			if (response.data.status === 'ok') {
+				console.log('in ok dispatched');
 				dispatch({
 					type: actionTypes.CHECKED_ELIGIBILITY,
 					payload: false,
 				});
+				dispatch(updateUser({
+					user: response.data.user,
+				}));
 			}
+			return response;
 		})
 );
 

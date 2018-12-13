@@ -17,7 +17,7 @@ const validators = {
 	revenue: {
 		validatorMethod: notEmptyValidator,
 	},
-	comapnyName: {
+	companyName: {
 		validatorMethod: notEmptyValidator,
 	},
 	dateOfRegistration: {
@@ -29,7 +29,7 @@ class Eligibility extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			comapnyName: '',
+			companyName: '',
 			dateOfRegistration: '',
 			revenue: '',
 			amountRequested: '',
@@ -60,7 +60,7 @@ class Eligibility extends React.Component {
 
 	render() {
 		const {
-			amountRequested, lockEligibility, validateForm, dateOfRegistration, revenue, comapnyName,
+			amountRequested, lockEligibility, validateForm, dateOfRegistration, revenue, companyName,
 		} = this.state;
 		return (
 			<div>
@@ -103,11 +103,11 @@ class Eligibility extends React.Component {
 				</Grid>
 				<Grid item xs={12} style={{ paddingLeft: 8, paddingRight: 8, paddingBottom: 4 }}>
 					<TextInput
-						id="comapnyName"
+						id="companyName"
 						label="Company Name"
-						value={comapnyName}
+						value={companyName}
 						onChange={this.handleClick}
-						validationHelper={validators.comapnyName}
+						validationHelper={validators.companyName}
 						validateForm={validateForm}
 						disabled={lockEligibility}
 					/>

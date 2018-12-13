@@ -3,7 +3,7 @@ const endPoints = {
 	eligibility: '/users/eligibility/',
 	signup: '/users/register/',
 	login: '/users/login/',
-	inDepth: '/users/indepth_details/',
+	inDepth: '/users/indepth/',
 };
 
 export const getAppData = fetchApi => fetchApi()(endPoints.appdata, {}, 'get');
