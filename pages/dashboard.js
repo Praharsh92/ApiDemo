@@ -39,6 +39,11 @@ const styles = () => ({
 		fontSize: '1.5rem',
 		textTransform: 'capitalize',
 	},
+	btnText2: {
+		marginTop: 10,
+		fontSize: '1rem',
+		textTransform: 'capitalize',
+	},
 });
 
 const Index = ({ classes }) => (
@@ -54,6 +59,7 @@ const Index = ({ classes }) => (
 				<div className={classes.content}>
 					<Typography component="h2" variant="h2" className={classes.btnText}>DashBoard!</Typography>
 					<LinearProgress className={classes.progress} />
+					<Typography component="h2" variant="h2" className={classes.btnText2}>just static page without login check</Typography>
 				</div>
 			</Grid>
 		</Grid>

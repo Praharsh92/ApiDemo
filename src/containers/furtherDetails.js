@@ -49,7 +49,7 @@ class FurtherDetails extends React.Component {
 	componentDidMount() {
 		const { user } = this.props;
 		if (user.status === 'nok') {
-			Router.push('/eligibility');
+			Router.push('/login');
 		}
 	}
 
