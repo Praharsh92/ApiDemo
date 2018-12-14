@@ -63,6 +63,7 @@ export const submitPackage = packageId => (
 	(dispatch, getState, { fetchApi }) => api.submitPackage(fetchApi, packageId)
 		.then((response) => {
 			if (response.data.status === 'ok') {
+				dispatch(updateUser(response.data.user));
 				Router.push('/dashboard');
 			}
 		})
