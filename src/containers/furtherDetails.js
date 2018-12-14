@@ -9,7 +9,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import TextInput from 'Root/src/components/form/textinput';
-import NumberInput from 'Root/src/components/form/numberinput';
 import Select from 'Root/src/components/form/select';
 import { notEmptyValidator, selectValidator } from 'Root/src/components/form/validator';
 import { submitFurtherDetails } from 'Root/src/state/application/actions';
@@ -26,10 +25,13 @@ const validators = {
 	},
 };
 
-const locationOptions = [
-	{ id: 'Urban', value: 'Urban' },
-	{ id: 'Semi-Urban', value: 'Semi-Urban' },
-	{ id: 'Rural', value: 'Rural' },
+const sectorOptions = [
+	{ id: 'Agriculture', value: 'Agriculture' },
+	{ id: 'Retail', value: 'Retail' },
+	{ id: 'Medical Research', value: 'Medical Research' },
+	{ id: 'Infrastructure', value: 'Infrastructure' },
+	{ id: 'Finance', value: 'Finance' },
+	{ id: 'Others', value: 'Others' },
 ];
 
 class FurtherDetails extends React.Component {
@@ -78,7 +80,7 @@ class FurtherDetails extends React.Component {
 		return (
 			<div>
 				<Grid item xs={12} style={{ paddingLeft: 8, paddingRight: 8, paddingBottom: 4 }}>
-					<NumberInput
+					<TextInput
 						id="taxRegNo"
 						label="Tax Registartion Number"
 						value={taxRegNo}
@@ -89,25 +91,25 @@ class FurtherDetails extends React.Component {
 					/>
 				</Grid>
 				<Grid item xs={12} style={{ paddingLeft: 8, paddingRight: 8, paddingBottom: 4 }}>
-					<TextInput
+					<Select
 						id="sector"
 						label="Sector"
 						value={sector}
 						onChange={this.handleClick}
 						validationHelper={validators.sector}
 						validateForm={validateForm}
+						options={sectorOptions}
 						disabled={lockFurtherDetails}
 					/>
 				</Grid>
 				<Grid item xs={12} style={{ paddingLeft: 8, paddingRight: 8, paddingBottom: 4 }}>
-					<Select
+					<TextInput
 						id="location"
-						label="Location"
+						label="Address"
 						value={location}
 						onChange={this.handleClick}
 						validationHelper={validators.location}
 						validateForm={validateForm}
-						options={locationOptions}
 						disabled={lockFurtherDetails}
 					/>
 				</Grid>

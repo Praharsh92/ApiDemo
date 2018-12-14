@@ -2,6 +2,6 @@ export default {
 	eligibility: '/eligibility',
 	indepth_details: '/in-depth',
 	register: '/register',
-	dashboard: '/dashboard',
+	user_dashboard: '/dashboard',
 	choose_package: '/choose-package',
 };
