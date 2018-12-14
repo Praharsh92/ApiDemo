@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -8,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import TextInput from 'Root/src/components/form/textinput';
 import NumberInput from 'Root/src/components/form/numberinput';
 import { notEmptyValidator, dateValidator } from 'Root/src/components/form/validator';
-import { checkEligibility } from 'Root/src/state/application/actions';
+import { checkEligibility, getEligibilityData } from 'Root/src/state/application/actions';
 
 const validators = {
 	amountRequested: {
@@ -36,6 +37,18 @@ class Eligibility extends React.Component {
 			validateForm: false,
 		};
 		this.handleClick = this.handleClick.bind(this);
+	}
+
+	componentDidMount() {
+		const { user } = this.props;
+		if (user.status !== 'nok') {
+			this.props.getEligibilityData()
+				.then((response) => {
+					this.setState({
+						...response.data, lockEligibility: response.data.locked,
+					});
+				});
+		}
 	}
 
 	handleClick = (e) => {
@@ -121,10 +134,19 @@ class Eligibility extends React.Component {
 		);
 	}
 }
+Eligibility.propTypes = {
+	checkEligibility: PropTypes.func.isRequired,
+	getEligibilityData: PropTypes.func.isRequired,
+	user: PropTypes.object.isRequired,
+};
+const mapStateToProps = state => ({
+	user: state.user.user,
+});
 
 const mapDispatchToProps = dispatch => ({
 	checkEligibility: data => dispatch(checkEligibility(data)),
+	getEligibilityData: () => dispatch(getEligibilityData()),
 });
 
 
-export default connect(null, mapDispatchToProps)(Eligibility);
+export default connect(mapStateToProps, mapDispatchToProps)(Eligibility);
