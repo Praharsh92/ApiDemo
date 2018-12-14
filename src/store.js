@@ -33,7 +33,7 @@ export default (initialState, { isServer }) => {
 		const persistedReducer = persistReducer(persistConfig, combinedReducer);
 		store = createStore(persistedReducer, initialState, enhancer);
 
-		persistStore(store, {}, () => {});
+		store.__persistor = persistStore(store, {}, () => {});
 	}
 	return store;
 };

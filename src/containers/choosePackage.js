@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
+import Router from 'next/router';
 
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -46,7 +46,10 @@ class ChoosePlan extends React.Component {
 
 
 	componentDidMount() {
-		const { getUserPackage } = this.props;
+		const { user, getUserPackage } = this.props;
+		if (user.status === 'nok') {
+			Router.push('/login');
+		}
 		getUserPackage()
 			.then((response) => {
 				this.setState({
@@ -162,10 +165,14 @@ const mapDispatchToProps = dispatch => ({
 ChoosePlan.propTypes = {
 	getUserPackage: PropTypes.func.isRequired,
 	submitSelectedPackage: PropTypes.func.isRequired,
+	user: PropTypes.object.isRequired,
 };
+const mapStateToProps = state => ({
+	user: state.user.user,
+});
 
 ChoosePlan.contextTypes = {
 	store: PropTypes.object.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(ChoosePlan);
+export default connect(mapStateToProps, mapDispatchToProps)(ChoosePlan);
