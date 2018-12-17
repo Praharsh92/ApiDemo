@@ -1,0 +1,16 @@
+{
+  "apps": [
+    {
+      "name": "ApiDemo",
+      "script": "/",
+      "instances": 1,
+      "exec_mode": "cluster",
+      "script": "npm",
+      "args" : "run build_start",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": "3000",
+      }
+    }
+  ]
+}
