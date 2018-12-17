@@ -45,7 +45,11 @@ class Eligibility extends React.Component {
 			this.props.getEligibilityData()
 				.then((response) => {
 					this.setState({
-						...response.data, lockEligibility: response.data.locked,
+						lockEligibility: response.data.locked,
+						dateOfRegistration: response.data.date_of_registration,
+						revenue: `${response.data.revenue}`,
+						amountRequested: `${response.data.amount_requested}`,
+						companyName: response.data.company_name,
 					});
 				});
 		}
