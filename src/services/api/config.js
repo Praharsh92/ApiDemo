@@ -1,5 +1,5 @@
 export default {
-	url: 'http://localhost/api_v1',
+	url: 'http://52.66.204.84/api_v1',
 	networkTimeoutThreshold: 55000,
 };
 // export default {
