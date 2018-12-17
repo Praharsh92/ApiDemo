@@ -57,14 +57,13 @@ class Login extends React.Component {
 			const { login, updateloggedUser } = this.props;
 			login(username, password)
 				.then((res) => {
-					updateloggedUser(res.data);
-					return res;
-				})
-				.then((res) => {
-					// console.log(res);
-					Router.push(stateMap[res.data.current_state]);
-				})
-				.catch(res => this.setState({ error: true, errorMessage: res.data.response }));
+					if (res.data.status === 'ok') {
+						updateloggedUser(res.data);
+						Router.push(stateMap[res.data.current_state]);
+					} else {
+						this.setState({ error: true, errorMessage: res.data.response });
+					}
+				});
 		}
 	}
 
