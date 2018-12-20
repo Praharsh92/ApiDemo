@@ -66,7 +66,7 @@ const styles = theme => ({
 	},
 });
 
-const Index = ({ classes, user }) => {
+const Index = ({ classes, user, currentRoute }) => {
 	let btnText;
 	let btnFunction;
 	if (user.status === 'nok') {
@@ -74,7 +74,7 @@ const Index = ({ classes, user }) => {
 		btnFunction = () => { Router.push('/eligibility'); };
 	} else {
 		btnText = 'Continue to App';
-		btnFunction = () => { Router.push(stateMap[user.current_state]); };
+		btnFunction = () => { Router.push(stateMap[currentRoute]); };
 	}
 	return (
 		<div className={classes.root}>
@@ -98,11 +98,13 @@ const Index = ({ classes, user }) => {
 };
 const mapStateToProps = state => ({
 	user: state.user.user,
+	currentRoute: state.user.currentState,
 });
 
 Index.propTypes = {
 	classes: PropTypes.object.isRequired,
 	user: PropTypes.object.isRequired,
+	currentRoute: PropTypes.string.isRequired,
 };
 
 

@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import TextInput from 'Root/src/components/form/textinput';
 import { notEmptyValidator, emailValidator } from 'Root/src/components/form/validator';
 import { register } from 'Root/src/state/application/actions';
-import { updateUser, logOut } from 'Root/src/state/user/actions';
+import { logOut } from 'Root/src/state/user/actions';
 import stateMap from 'Root/src/state/stateMap';
 
 

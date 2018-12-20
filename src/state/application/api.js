@@ -1,5 +1,5 @@
 const endPoints = {
-	appdata: '/init/',
+	appdata: '/users/getuser',
 	eligibility: '/users/eligibility/',
 	signup: '/users/register/',
 	login: '/users/login/',
