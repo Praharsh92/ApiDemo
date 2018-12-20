@@ -4,6 +4,7 @@ const initialState = {
 	user: {
 		status: 'nok',
 	},
+	currentState: 'eligibility',
 };
 
 export const reducer = (state = initialState, action) => {
@@ -11,6 +12,12 @@ export const reducer = (state = initialState, action) => {
 		case actionTypes.UPDATE_USER:
 			return {
 				user: action.user,
+				currentState: action.currentState,
+			};
+		case actionTypes.UPDATE_CURRENT_STATE:
+			return {
+				...state,
+				currentState: action.payload,
 			};
 		default:
 			return state;

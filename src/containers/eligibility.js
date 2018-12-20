@@ -125,11 +125,13 @@ class Eligibility extends React.Component {
 						disabled={lockEligibility}
 					/>
 				</Grid>
-				<Grid item xs={12} style={{ padding: 8 }}>
-					<Button variant="outlined" onClick={() => this.submitForm()}>
-						<Typography variant="h2" style={{ fontSize: 14,	textTransform: 'capitalize' }}>Submit</Typography>
-					</Button>
-				</Grid>
+				{!lockEligibility && (
+					<Grid item xs={12} style={{ padding: 8 }}>
+						<Button variant="outlined" onClick={() => this.submitForm()}>
+							<Typography variant="h2" style={{ fontSize: 14,	textTransform: 'capitalize' }}>Submit</Typography>
+						</Button>
+					</Grid>
+				)}
 			</div>
 		);
 	}

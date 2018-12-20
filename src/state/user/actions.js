@@ -2,9 +2,14 @@ import Router from 'next/router';
 import * as profileActionTypes from './actionTypes';
 import * as api from './api';
 
-export const updateUser = user => ({
+export const updateUser = data => ({
 	type: profileActionTypes.UPDATE_USER,
-	user,
+	user: data.user,
+	currentState: data.current_state,
+});
+export const updateCurrState = payload => ({
+	type: profileActionTypes.UPDATE_CURRENT_STATE,
+	payload,
 });
 // export const logOut = () => ({
 // 	type: profileActionTypes.UPDATE_USER,
@@ -28,6 +33,7 @@ export const logOut = () => (
 			dispatch({
 				type: profileActionTypes.UPDATE_USER,
 				user: { status: 'nok' },
+				currentState: 'eligibility',
 			});
 			Router.push('/');
 		})

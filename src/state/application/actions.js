@@ -1,6 +1,6 @@
 import Router from 'next/router';
 import stateMap from 'Root/src/state/stateMap';
-import { updateUser } from 'Root/src/state/user/actions';
+import { updateUser, updateCurrState } from 'Root/src/state/user/actions';
 import * as actionTypes from './actionTypes';
 import * as api from './api';
 
@@ -28,7 +28,7 @@ export const submitFurtherDetails = data => (
 	(dispatch, getState, { fetchApi }) => api.submitFurtherDetails(fetchApi, data)
 		.then((response) => {
 			if (response.data.status === 'ok') {
-				dispatch(updateUser(response.data.user));
+				dispatch(updateCurrState(response.data.current_state));
 				Router.push('/choose-package');
 			} else if (response.data.status === 'nok') {
 				Router.push('/declined');
@@ -46,7 +46,7 @@ export const register = (username, password, email, passedUuid) => (
 					type: actionTypes.CHECKED_ELIGIBILITY,
 					payload: false,
 				});
-				dispatch(updateUser(response.data.user));
+				dispatch(updateUser(response.data));
 			}
 			return response;
 		})
@@ -63,7 +63,7 @@ export const submitPackage = packageId => (
 	(dispatch, getState, { fetchApi }) => api.submitPackage(fetchApi, packageId)
 		.then((response) => {
 			if (response.data.status === 'ok') {
-				dispatch(updateUser(response.data.user));
+				dispatch(updateCurrState(response.data.current_state));
 				Router.push('/dashboard');
 			}
 		})
