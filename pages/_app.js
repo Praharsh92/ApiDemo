@@ -9,7 +9,7 @@ import initStore from 'Root/src/store';
 
 const loader = () => (
 	<div style={{
-		display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: 'linear-gradient(to right, #ece9e6, #ffffff);',
+		display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: 'linear-gradient(to right, #ece9e6, #ffffff)',
 	}}
 	>
 		<div style={{
